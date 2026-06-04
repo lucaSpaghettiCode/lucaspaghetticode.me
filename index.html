@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Luca — Software Architect &amp; Network R&amp;D</title>
+<meta name="description" content="Software architect and network R&D engineer." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&family=Geist+Mono:wght@400&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<style>
+  /* ==========================================================
+     A minimalist dark-blue document.
+     Type and space. One accent. No decoration.
+     ========================================================== */
+  :root[data-theme="dark"] {
+    --bg: #0d1117;
+    --ink: #c9d1d9;
+    --ink-strong: #f0f3f6;
+    --ink-mute: #6b7686;
+    --line: rgba(201,209,217,0.10);
+    --accent: #58a6ff;
+  }
+  :root[data-theme="light"] {
+    --bg: #fbfbfa;
+    --ink: #3a3f47;
+    --ink-strong: #0d1117;
+    --ink-mute: #9aa0a8;
+    --line: rgba(13,17,23,0.10);
+    --accent: #1f6feb;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.7;
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background .3s ease, color .3s ease;
+  }
+  ::selection { background: var(--accent); color: var(--bg); }
+  a { color: var(--accent); text-decoration: none; }
+
+  .wrap { max-width: 600px; margin: 0 auto; padding: 0 28px; }
+
+  /* ---- top line ---- */
+  .top {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 40px 0 0;
+    font-family: 'Geist Mono', monospace; font-size: 23px;
+    color: var(--ink-mute);
+  }
+  .top .name { color: var(--ink-strong); }
+  .theme-toggle {
+    background: none; border: 0; padding: 0;
+    color: var(--ink-mute); cursor: pointer;
+    font-family: 'Geist Mono', monospace; font-size: 13px;
+    transition: color .2s;
+  }
+  .theme-toggle:hover { color: var(--accent); }
+
+  /* ---- nav ---- */
+  .nav {
+    display: flex; gap: 24px;
+    padding: 1px 0 0;
+    font-family: 'Geist Mono', monospace; font-size: 13px;
+  }
+  .nav a { color: var(--ink-mute); transition: color .2s; }
+  .nav a:hover { color: var(--accent); }
+  .nav a.active { color: var(--ink-strong); }
+
+  /* ---- hero ---- */
+  .hero { padding: 172px 0 0; }
+  .hero .avatar {
+    width: 176px; height: 176px; border-radius: 50%; object-fit: cover;
+    display: block; margin: 0 152px 32px;
+    border: 1px solid var(--line);
+    transition: filter .4s ease, border-color .4s ease;
+  }
+  .hero .avatar:hover { filter: grayscale(0); border-color: var(--accent); }
+  .hero h1 {
+    font-weight: 400; font-size: 27px; line-height: 1.5; letter-spacing: -0.01em;
+    margin: 0; color: var(--ink-strong); text-wrap: pretty;
+  }
+  .hero h1 .mute { color: var(--ink-mute); }
+
+  /* ---- blocks ---- */
+  .block { padding: 64px 0 0; }
+  .block .label { font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--ink-mute); margin: 0 0 24px; }
+
+  .item {
+    display: flex; justify-content: space-between; gap: 24px;
+    padding: 11px 0; border-bottom: 1px solid var(--line);
+  }
+  .item:last-child { border-bottom: 0; }
+  .item .l { color: var(--ink-strong); }
+  .item .l .at { color: var(--ink-mute); }
+  .item .r {
+    display: flex; align-items: center; gap: 12px;
+    font-family: 'Geist Mono', monospace; font-size: 13px;
+    color: var(--ink-mute); white-space: nowrap; flex-shrink: 0;
+  }
+  .item a.l { color: var(--ink-strong); transition: color .18s; }
+  .item:hover a.l { color: var(--accent); }
+  .item .l .new { font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--accent); margin-left: 8px; }
+
+  /* ---- tech icons ---- */
+  .ico { width: 15px; height: 15px; display: block; flex-shrink: 0; }
+  .techmini { display: inline-flex; align-items: center; gap: 7px; color: var(--ink-mute); }
+  .techmini .ico { color: var(--ink-mute); transition: color .18s; }
+  .item:hover .techmini .ico { color: var(--accent); }
+  .yr { min-width: 34px; text-align: right; }
+
+  /* ---- logo badges + education ---- */
+  .logo {
+    width: 54px; height: 54px; border-radius: 8px; flex-shrink: 0; overflow: hidden;
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--ink-strong) 4%, transparent);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.02em;
+    color: var(--ink-strong);
+  }
+  .logo img { width: auto; height: 100%; max-height: 54px; object-fit: contain; display: block; }
+  .row-logo .l { display: flex; align-items: center; gap: 13px; }
+
+  .edu {
+    display: flex; align-items: flex-start; gap: 13px;
+    padding: 16px 0; border-bottom: 1px solid var(--line);
+  }
+  .edu:last-child { border-bottom: 0; }
+  .edu .logo { margin-top: 2px; }
+  .edu-main { flex: 1; min-width: 0; }
+  .edu-deg { color: var(--ink-strong); line-height: 1.4; }
+  .edu-deg .at { color: var(--ink-mute); }
+  .edu-inst { color: var(--ink-mute); font-size: 14px; line-height: 1.4; }
+  .edu-meta {
+    text-align: right; flex-shrink: 0;
+    font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--ink-mute);
+    line-height: 1.6; white-space: nowrap;
+  }
+  .edu-meta .grade { color: var(--accent); }
+  @media (max-width: 480px) {
+    .edu-deg, .edu-inst { font-size: 14px; }
+    .edu-meta { font-size: 11px; }
+  }
+
+  /* ---- prose ---- */
+  .prose p { margin: 0 0 18px; max-width: 56ch; }
+  .prose p:last-child { margin-bottom: 0; }
+  .prose strong { color: var(--ink-strong); font-weight: 500; }
+
+  /* ---- footer ---- */
+  footer {
+    padding: 80px 0 56px;
+    font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--ink-mute);
+    display: flex; justify-content: space-between; gap: 16px;
+  }
+
+  /* ==========================================================
+     DETAIL VIEWS (project + post)
+     ========================================================== */
+  .detail-view { display: none; }
+  body[data-view="detail"] .home-view { display: none; }
+  body[data-view="detail"] .detail-view.active { display: block; }
+
+  .detail, .post { padding: 90px 0 0; }
+  .back {
+    font-family: 'Geist Mono', monospace; font-size: 13px;
+    color: var(--ink-mute); transition: color .2s;
+  }
+  .back:hover { color: var(--accent); }
+  .kicker, .post .meta {
+    margin: 52px 0 0;
+    font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--ink-mute);
+  }
+  .detail h1, .post h1 {
+    font-weight: 500; font-size: 30px; line-height: 1.3; letter-spacing: -0.02em;
+    margin: 14px 0 0; color: var(--ink-strong); text-wrap: balance;
+  }
+  .detail .lead, .post .dek {
+    margin: 20px 0 0; font-size: 18px; line-height: 1.6; max-width: 54ch;
+  }
+  .detail .lead { color: var(--ink); }
+  .post .dek { color: var(--ink-mute); }
+
+  /* project image */
+  .project-img {
+    display: block;
+    width: 100vw; margin: 30px 0 0 50%;
+    transform: translateX(-50%);
+    border-radius: 0; border: none;
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    max-width: 100%; object-fit: cover;
+  }
+
+  .project-img-wide {
+    display: block;
+    width: 100vw; margin: 30px 0 0 50%;
+    transform: translateX(-50%);
+    border-radius: 0; border: none;
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    max-width: 1000%; object-fit: none;
+  }
+
+  /* tech chips */
+  .stack { display: flex; flex-wrap: wrap; gap: 9px; margin: 30px 0 0; }
+  .tech {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: 'Geist Mono', monospace; font-size: 12.5px; color: var(--ink-strong);
+    border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px 5px 10px;
+    transition: border-color .2s;
+  }
+  .tech:hover { border-color: var(--accent); }
+  .tech .ico { color: var(--accent); }
+
+  /* facts */
+  .facts { margin: 36px 0 0; border-top: 1px solid var(--line); }
+  .frow {
+    display: flex; justify-content: space-between; gap: 24px;
+    padding: 11px 0; border-bottom: 1px solid var(--line);
+    font-family: 'Geist Mono', monospace; font-size: 13px;
+  }
+  .frow .fk { color: var(--ink-mute); }
+  .frow .fv { color: var(--ink-strong); text-align: right; }
+
+  /* body prose (shared) */
+  .body { margin: 44px 0 0; line-height: 1.8; color: var(--ink); }
+  .body > * + * { margin-top: 1.1em; }
+  .body strong { color: var(--ink-strong); font-weight: 500; }
+  .body em { color: var(--accent); font-style: italic; }
+  .body h2 { font-weight: 500; font-size: 18px; color: var(--ink-strong); margin-top: 2.2em; letter-spacing: -0.01em; }
+  .body blockquote { margin: 1.6em 0; padding: 0 0 0 20px; border-left: 2px solid var(--accent); color: var(--ink-strong); }
+  .body code { font-family: 'Geist Mono', monospace; font-size: 0.85em; color: var(--accent); }
+  .body pre {
+    font-family: 'Geist Mono', monospace; border-left: 2px solid var(--line);
+    padding: 4px 0 4px 20px; overflow-x: auto; font-size: 13px; line-height: 1.7; color: var(--ink);
+  }
+  .body pre code { color: inherit; }
+  .body pre code .cm { color: var(--ink-mute); }
+  .body pre code .pr { color: var(--accent); }
+  .body ol, .body ul { padding-left: 20px; }
+  .body li { margin: 0 0 0.4em; }
+  .body li::marker { color: var(--ink-mute); }
+  .body hr { border: 0; border-top: 1px solid var(--line); margin: 2.4em 0; }
+  .body .signoff { color: var(--ink-mute); margin-top: 2.6em; }
+
+  .post-nav {
+    margin: 64px 0 0; padding-top: 24px; border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; gap: 24px;
+    font-family: 'Geist Mono', monospace; font-size: 13px;
+  }
+  .post-nav a { color: var(--ink-mute); }
+  .post-nav a:hover { color: var(--accent); }
+  .post-nav .next { text-align: right; }
+</style>
+</head>
+<body data-view="home">
+
+<div class="wrap">
+
+  <div class="top">
+    <span class="name">Luca G. Pinta</span>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">light</button>
+  </div>
+
+  <nav class="nav">
+    <a href="index.html" class="active">index</a>
+    <a href="cv.html">cv</a>
+  </nav>
+
+  <!-- ============================================================
+       HOME
+       ============================================================ -->
+  <main class="home-view">
+
+    <section class="hero">
+      <img class="avatar" src="assets/luca.png" width="76" height="76" alt="Luca" />
+      <h1>
+        Hi there! </br> I'm Luca (🗣️: 🇬🇧🇮🇹~🇩🇪), software architect &amp; network R&amp;D engineer.
+        Interested in the quiet parts of the internet — routing, control
+        planes, and the systems no one notices until they break.</br>
+        <span class="mute">Based in Munich, Deuschtland </br>
+        Currently open to new roles 🌍</span>
+      </h1>
+    </section>
+
+    <section class="block prose">
+      <p class="label">About</p>
+      <p>I spent my first year writing application backends and slowly realised the interesting bugs lived two layers down. Now I work mostly between <strong>L3 and L7</strong> — routing, service meshes, and the quiet protocols people lean on without thinking about.</p>
+      <p>I write essays about boring infrastructure, ship side projects that are at least 40% jokes, and am slowly being convinced that the hardest part of distributed systems is the part where humans agree.</p>
+    </section>
+
+    <section class="block">
+      <p class="label">Projects</p>
+      <div class="item"><a class="l" href="#project/adagio">Adagio: your files, in tempo!</a><span class="r"><span class="techmini" data-tech="Rust,eBPF"></span><span class="yr">2026</span></span></div>
+      <div class="item"><a class="l" href="#project/homelab-nas">10GbE NAS build</a><span class="r"><span class="techmini" data-tech="ZFS,Linux"></span><span class="yr">2026</span></span></div>
+      <div class="item"><a class="l" href="#project/home-net">Autonomous home network</a><span class="r"><span class="techmini" data-tech="BGP,Linux"></span><span class="yr">2025</span></span></div>
+      <div class="item"><a class="l" href="#project/oakestra">Oakestra: A Lightweight Hierarchical Orchestration Framework for Edge Computing  </a><span class="r"><span class="techmini" data-tech="K8s,Go"></span><span class="yr">2024</span></span></div>
+      <div class="item"><a class="l" href="#project/zt-coap">Go-Microservices: Architecting Zero-Trust CoAP</a><span class="r"><span class="techmini" data-tech="Python,MQTT"></span><span class="yr">2022</span></span></div>
+    </section>
+
+    <section class="block">
+      <p class="label">Writing</p>
+      <div class="item"><a class="l" href="#post/adagio-sdd-experiment">Building Adagio: A Spec-Driven Experiment in Privacy-First Sync <span class="new">new</span></a><span class="r">Jun 2026</span></div>
+      <div class="item"><a class="l" href="#post/deliberate-machine">The Deliberate Machine</a><span class="r">May 2026</span></div>
+    </section>
+
+    <section class="block prose">
+      <p class="label">Contact</p>
+      <p>Pass by to sai hi!</p>
+      <div class="item" style="margin-top:8px;"><a class="l" href="mailto:lucagpinta@proton.me">lucagpinta@proton.me</a><span class="r">Email</span></div>
+      <div class="item"><a class="l" href="https://github.com/lucaspaghetticode" target="_blank" rel="noopener">github.com/lucaspaghetticode</a><span class="r">Code</span></div>
+      <div class="item"><a class="l" href="https://www.linkedin.com/in/luca-g-pinta" target="_blank" rel="noopener">in/luca-g-pinta</a><span class="r">Career</span></div>
+    </section>
+
+    <footer>
+      <span>© 2026 Luca G. Pinta</span>
+      <span>Munich · CET</span>
+    </footer>
+
+  </main>
+
+ <!-- ============================================================
+       SHARED PROJECT TEMPLATE
+       ============================================================ -->
+       <main class="detail-view" id="tpl-project">
+        <article class="detail">
+          <a href="#" class="back">← index</a>
+          <div class="kicker" id="d-kicker"></div>
+          <h1 id="d-title"></h1>
+          <p class="lead" id="d-lead"></p>
+          <img class="project-img" id="d-img" alt="" />
+          <div class="stack" id="d-stack"></div>
+          <div class="facts" id="d-facts"></div>
+          <div class="body" id="d-body"></div>
+          <nav class="post-nav">
+            <a href="#" id="d-prev"></a>
+            <a href="#" class="next" id="d-next"></a>
+          </nav>
+        </article>
+      </main>
+    
+      <!-- ============================================================
+           SHARED POST TEMPLATE
+           ============================================================ -->
+      <main class="detail-view" id="tpl-post">
+        <article class="post">
+          <a href="#" class="back">← index</a>
+          <div class="meta" id="p-meta"></div>
+          <h1 id="p-title"></h1>
+          <p class="dek" id="p-dek"></p>
+          <div class="body" id="p-body"></div>
+          <nav class="post-nav">
+            <a href="#" id="p-prev"></a>
+            <a href="#" class="next" id="p-next"></a>
+          </nav>
+        </article>
+      </main>
+    
+    </div>
+    
+    <template id="__bundler_thumbnail">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100" height="100" fill="#0d1117"/>
+        <circle cx="50" cy="50" r="15" fill="none" stroke="#58a6ff" stroke-width="2.5"/>
+        <circle cx="50" cy="50" r="3.5" fill="#58a6ff"/>
+        <text x="50" y="84" text-anchor="middle" fill="#f0f3f6" font-family="monospace" font-size="9" letter-spacing="1">LUCA</text>
+      </svg>
+    </template>
+    
+    <script>
+      /* ==========================================================
+         CONTENT — metadata for all projects and posts
+         ========================================================== */
+      const PROJECTS = {
+        'adagio': {
+          kicker: 'Project · 2026 · Author',
+          title: 'Adagio: your files, in tempo!',
+          lead: 'Adagio syncs files between your devices and a Nextcloud server. It runs as a background daemon (adagio-daemon) and exposes a native GUI (adagio-desktop, built with Tauri), a CLI (adagio-cli), and a virtual filesystem (FUSE3 on Linux, extensible to CfAPI/FileProvider). All communication between the GUI/CLI and the daemon happens over a Unix socket using NDJSON RPC.',
+          image: 'assets/projects/adagio.png',
+          stack: ['Rust', 'Linux'],
+          facts: [
+            { k: 'Role',     v: 'Author' },
+            { k: 'Context',  v: 'Homelab' },
+            { k: 'Year',     v: '2026' },
+            { k: 'Language', v: 'Rust · Tauri · FUSE3 ' },
+            { k: 'Status',   v: 'First release - Allegretto' },
+          ],
+          prev: null,
+          next: { slug: 'homelab-nas', label: '10GbE NAS build' },
+        },
+        'homelab-nas': {
+          kicker: 'Project · 2026 · Builder',
+          title: '10GbE NAS build',
+          lead: 'A high-performance storage solution optimized for media streaming and 10GbE throughput, featuring ZFS for ultimate data integrity.',
+          image: 'assets/project-nas.jpg',
+          stack: ['ZFS', 'Linux'],
+          facts: [
+            { k: 'Storage', v: 'ZFS RaidZ2' },
+            { k: 'Network', v: '10GbE SFP+' },
+            { k: 'OS',      v: 'Debian / Linux' },
+          ],
+          prev: { slug: 'adagio', label: 'Adagio' },
+          next: { slug: 'home-net', label: 'home network' },
+        },
+        'home-net': {
+          kicker: 'Project · 2025 · Designer & operator',
+          title: 'Autonomous home network',
+          lead: 'Four hard-isolated VLANs, OPNsense with inline Suricata IDS/IPS, a Mikrotik L3 switch, two Ubiquiti APs — and a BGP session to a friend’s AS.',
+          image: 'assets/project-home-net.jpg',
+          stack: ['BGP', 'Linux'],
+          facts: [
+            { k: 'Router',  v: 'Protectli VP2420' },
+            { k: 'Switch',  v: 'Mikrotik CRS326' },
+            { k: 'APs',     v: '2× Ubiquiti U6 Pro' },
+            { k: 'OS',      v: 'OPNsense 24.7' },
+          ],
+          prev: { slug: 'homelab-nas', label: 'NAS build' },
+          next: { slug: 'oakestra', label: 'Oakestra' },
+        },
+        'oakestra': {
+          kicker: 'Project · 2024 · Contributor',
+          title: 'Oakestra: A Lightweight Hierarchical Orchestration Framework for Edge Computing',
+          lead: 'A lightweight hierarchical orchestration framework for Edge Computing, managing distributed resources across heterogeneous nodes.',
+          image: 'assets/project-k3s.jpg',
+          stack: ['K8s', 'Go'],
+          facts: [
+            { k: 'Nodes',   v: 'Heterogeneous Edge' },
+            { k: 'Focus',   v: 'Hierarchical Control' },
+            { k: 'Language',v: 'Go' },
+          ],
+          prev: { slug: 'home-net', label: 'home network' },
+          next: { slug: 'zt-coap', label: 'Zero-Trust CoAP' },
+        },
+        'zt-coap': {
+          kicker: 'Project · 2022 · Author',
+          title: 'Go-Microservices: Architecting Zero-Trust CoAP',
+          lead: 'Architecting zero-trust microservices using CoAP and MQTT for secure, low-latency IoT communication in constrained environments.',
+          image: 'assets/project-iot.jpg',
+          stack: ['Python', 'MQTT'],
+          facts: [
+            { k: 'Gateway',       v: 'Raspberry Pi 4' },
+            { k: 'Protocols',     v: 'CoAP · MQTT' },
+            { k: 'Security',      v: 'Zero-Trust' },
+          ],
+          prev: { slug: 'oakestra', label: 'Oakestra' },
+          next: null,
+        },
+      };
+    
+      const POSTS = {
+        'deliberate-machine': {
+          meta: 'Essay · March 28, 2026 · 12 min',
+          title: 'The deliberate machine.',
+          dek: 'The best systems are designed for the people who run them. Here’s how to build a machine that encourages thoughtful operators — and discourages the ones who cause outages.',
+          prev: null,
+          next: { slug: 'boring-infrastructure', label: 'boring infrastructure' },
+        },
+
+        'adagio-sdd-experiment': {
+          meta: 'Essay · Jun 4, 2026 · 14 min',
+          title: 'Building Adagio: A Spec-Driven Experiment in Privacy-First Sync',
+          dek: 'How 18 basic features, 18 specs, and a relentless commitment to process taught me what AI-assisted software development can actually look like in 2026.',
+          prev: { slug: 'deliberate-machine', label: 'the deliberate machine' },
+          next: null, 
+        },
+
+        /*
+        'next-post': {
+          meta: 'Note · February 02, 2026 · 9 min',
+          title: 'The title',
+          dek: 'The dek, a short summary that appears on the index and at the top of the post. It should be concise and enticing, giving readers a clear idea of what to expect without giving everything away.',
+          prev: { slug: 'adagio-sdd-experiment', label: 'adagio sdd experiment' },
+          next: { slug: '', label: '' },
+        },
+        */
+       
+      };
+    
+      /* ==========================================================
+         TECH ICONS — consistent line glyphs, currentColor
+         ========================================================== */
+      const Icons = (function () {
+        const T = {
+          Go:        { i:'<path d="M8 4c-2 0-2 3-2 4 0 2-2 2-2 4s2 2 2 4c0 1 0 4 2 4"/><path d="M16 4c2 0 2 3 2 4 0 2 2 2 2 4s-2 2-2 4c0 1 0 4-2 4"/>' },
+          Rust:      { i:'<circle cx="12" cy="12" r="3.4"/><path d="M12 3v2.4M12 18.6V21M3 12h2.4M18.6 12H21M5.6 5.6 7.3 7.3M16.7 16.7 18.4 18.4M18.4 5.6 16.7 7.3M7.3 16.7 5.6 18.4"/>' },
+          BGP:       { i:'<circle cx="5" cy="6" r="2"/><circle cx="19" cy="8" r="2"/><circle cx="12" cy="19" r="2"/><path d="M7 6.4 17 7.6M5.9 7.9 10.7 17.3M17.5 9.5 13.2 17.5"/>' },
+          K8s:       { i:'<path d="M12 3 4.5 7v10L12 21l7.5-4V7z"/><circle cx="12" cy="12" r="2.3"/><path d="M12 9.7V5.2M14 13.2l3.3 1.9M10 13.2l-3.3 1.9"/>' },
+          eBPF:      { i:'<path d="M4 5h16l-6 7v6l-4 2v-8z"/>' },
+          Python:    { i:'<path d="M9 8 5 12l4 4M15 8l4 4-4 4"/>' },
+          Postgres:  { i:'<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6"/><path d="M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/>' },
+          Node:      { i:'<path d="M12 3 4.5 7v10L12 21l7.5-4V7z"/><path d="M12 8v8M9 10.4l3 1.9 3-1.9"/>' },
+          Mongo:     { i:'<path d="M12 3c4 4 4 12 0 18-4-6-4-14 0-18z"/><path d="M12 5v15"/>' },
+          WebSockets:{ i:'<path d="M7 9 4 12l3 3M17 9l3 3-3 3M5 12h14"/>' },
+          OSS:       { i:'<circle cx="7" cy="6" r="2"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="9" r="2"/><path d="M7 8v8M7 14c0-3 2-5 8-5"/>' },
+          Swift:     { fill:true, i:'<path d="M5 5c6 1.5 10.5 6 13 13-1.8-1.4-3.6-2.2-6-2.2 1 1.2 1.6 2.4 1.6 4-2.8-2.6-6.4-5.4-8.6-8.6 1.8.9 3.4 1.5 5.2 1.5C8.6 9.8 6.6 7.6 5 5z"/>' },
+          Linux:     { i:'<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M7 9l3 3-3 3M13 15h4"/>' },
+          ZFS:       { i:'<rect x="3" y="3" width="18" height="5" rx="1.5"/><rect x="3" y="9.5" width="18" height="5" rx="1.5"/><rect x="3" y="16" width="18" height="5" rx="1.5"/>' },
+          Docker:    { i:'<rect x="3" y="9" width="5" height="4" rx="1"/><rect x="9" y="9" width="5" height="4" rx="1"/><rect x="9" y="4" width="5" height="4" rx="1"/><rect x="15" y="9" width="5" height="4" rx="1"/>' },
+          MQTT:      { i:'<circle cx="12" cy="12" r="2"/><path d="M12 10V5M8.5 14.5 5 18M15.5 14.5 19 18"/>' },
+        };
+        function svg(name) {
+          const d = T[name] || { i:'<circle cx="12" cy="12" r="7"/>' };
+          const attrs = d.fill
+            ? 'fill="currentColor" stroke="none"'
+            : 'fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"';
+          return '<svg class="ico" viewBox="0 0 24 24" ' + attrs + ' aria-hidden="true">' + d.i + '</svg>';
+        }
+        function render(root) {
+          root.querySelectorAll('.tech[data-tech]').forEach(el => {
+            const t = el.dataset.tech;
+            el.innerHTML = svg(t) + '<span>' + t + '</span>';
+          });
+          root.querySelectorAll('.techmini[data-tech]').forEach(el => {
+            el.innerHTML = el.dataset.tech.split(',').map(t => svg(t.trim())).join('');
+          });
+        }
+        return { render };
+      })();
+    
+      /* ---- render home icons on load ---- */
+      Icons.render(document);
+    
+      /* ---- theme toggle ---- */
+      (function () {
+        const root = document.documentElement;
+        const btn = document.getElementById('themeToggle');
+        root.setAttribute('data-theme', localStorage.getItem('luca-theme') || 'dark');
+        function sync() { btn.textContent = root.getAttribute('data-theme') === 'dark' ? 'light 💡' : 'dark 🌑'; }
+        sync();
+        btn.addEventListener('click', () => {
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          localStorage.setItem('luca-theme', next);
+          sync();
+        });
+      })();
+    
+      /* ==========================================================
+         HASH ROUTER — fetch markdown, render via marked
+         ========================================================== */
+      (function () {
+        const body = document.body;
+    
+        function setNav(prevEl, nextEl, type, data) {
+          if (data.prev) {
+            prevEl.href = '#' + type + '/' + data.prev.slug;
+            prevEl.textContent = '← ' + data.prev.label;
+            prevEl.removeAttribute('hidden');
+          } else {
+            prevEl.href = '#';
+            prevEl.textContent = type === 'project' ? '← all projects' : '← index';
+            prevEl.removeAttribute('hidden');
+          }
+          if (data.next) {
+            nextEl.href = '#' + type + '/' + data.next.slug;
+            nextEl.textContent = 'next: ' + data.next.label + ' →';
+            nextEl.removeAttribute('hidden');
+          } else {
+            nextEl.setAttribute('hidden', '');
+          }
+        }
+    
+        async function route() {
+          const hash = location.hash.replace(/^#/, '');
+          const m = hash.match(/^(post|project)\/([\w-]+)/);
+    
+          document.querySelectorAll('.detail-view').forEach(el => el.classList.remove('active'));
+    
+          if (m) {
+            const type = m[1], slug = m[2];
+            const data = type === 'project' ? PROJECTS[slug] : POSTS[slug];
+    
+            if (data) {
+              body.setAttribute('data-view', 'detail');
+              window.scrollTo({ top: 0, behavior: 'instant' });
+    
+              if (type === 'project') {
+                const tpl = document.getElementById('tpl-project');
+                tpl.classList.add('active');
+    
+                document.getElementById('d-kicker').textContent = data.kicker;
+                document.getElementById('d-title').textContent = data.title;
+                document.getElementById('d-lead').textContent = data.lead;
+                const img = document.getElementById('d-img');
+                img.src = data.image; img.alt = data.title;
+    
+                const stackEl = document.getElementById('d-stack');
+                stackEl.innerHTML = data.stack.map(t => '<span class="tech" data-tech="' + t + '"></span>').join('');
+                Icons.render(stackEl);
+    
+                document.getElementById('d-facts').innerHTML =
+                  data.facts.map(f => '<div class="frow"><span class="fk">' + f.k + '</span><span class="fv">' + f.v + '</span></div>').join('');
+    
+                setNav(document.getElementById('d-prev'), document.getElementById('d-next'), type, data);
+    
+                const bodyEl = document.getElementById('d-body');
+                bodyEl.innerHTML = '<p class="body-loading">Loading…</p>';
+                try {
+                  const resp = await fetch('content/project-' + slug + '.md');
+                  if (!resp.ok) throw new Error(resp.status);
+                  bodyEl.innerHTML = marked.parse(await resp.text());
+                } catch (_) {
+                  bodyEl.innerHTML = '<p style="color:var(--ink-mute)">Content unavailable.</p>';
+                }
+    
+              } else {
+                const tpl = document.getElementById('tpl-post');
+                tpl.classList.add('active');
+    
+                document.getElementById('p-meta').textContent = data.meta;
+                document.getElementById('p-title').textContent = data.title;
+                document.getElementById('p-dek').textContent = data.dek;
+    
+                setNav(document.getElementById('p-prev'), document.getElementById('p-next'), type, data);
+    
+                const bodyEl = document.getElementById('p-body');
+                bodyEl.innerHTML = '<p class="body-loading">Loading…</p>';
+                try {
+                  const resp = await fetch('content/post-' + slug + '.md');
+                  if (!resp.ok) throw new Error(resp.status);
+                  bodyEl.innerHTML = marked.parse(await resp.text());
+                } catch (_) {
+                  bodyEl.innerHTML = '<p style="color:var(--ink-mute)">Content unavailable.</p>';
+                }
+              }
+              return;
+            }
+          }
+    
+          body.setAttribute('data-view', 'home');
+        }
+    
+        window.addEventListener('hashchange', route);
+        route();
+      })();
+    </script>
+    
+    </body>
+    </html>
+    

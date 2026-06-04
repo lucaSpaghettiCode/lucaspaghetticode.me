@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Luca — CV</title>
+<meta name="description" content="CV — Luca G. Pinta, software architect and network R&D engineer." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&family=Geist+Mono:wght@400&display=swap" rel="stylesheet" />
+<style>
+  :root[data-theme="dark"] {
+    --bg: #0d1117;
+    --ink: #c9d1d9;
+    --ink-strong: #f0f3f6;
+    --ink-mute: #6b7686;
+    --line: rgba(201,209,217,0.10);
+    --accent: #58a6ff;
+  }
+  :root[data-theme="light"] {
+    --bg: #fbfbfa;
+    --ink: #3a3f47;
+    --ink-strong: #0d1117;
+    --ink-mute: #9aa0a8;
+    --line: rgba(13,17,23,0.10);
+    --accent: #1f6feb;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.7;
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background .3s ease, color .3s ease;
+  }
+  ::selection { background: var(--accent); color: var(--bg); }
+  a { color: var(--accent); text-decoration: none; }
+
+  .wrap { max-width: 600px; margin: 0 auto; padding: 0 28px; }
+
+  /* ---- top line ---- */
+  .top {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 40px 0 0;
+    font-family: 'Geist Mono', monospace; font-size: 13px;
+    color: var(--ink-mute);
+  }
+  .top .name { color: var(--ink-strong); }
+  .theme-toggle {
+    background: none; border: 0; padding: 0;
+    color: var(--ink-mute); cursor: pointer;
+    font-family: 'Geist Mono', monospace; font-size: 13px;
+    transition: color .2s;
+  }
+  .theme-toggle:hover { color: var(--accent); }
+
+  /* ---- nav ---- */
+  .nav {
+    display: flex; gap: 24px;
+    padding: 16px 0 0;
+    font-family: 'Geist Mono', monospace; font-size: 13px;
+  }
+  .nav a { color: var(--ink-mute); transition: color .2s; }
+  .nav a:hover { color: var(--accent); }
+  .nav a.active { color: var(--ink-strong); }
+
+  /* ---- blocks ---- */
+  .block { padding: 64px 0 0; }
+  .block .label { font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--ink-mute); margin: 0 0 24px; }
+
+  .item {
+    display: flex; justify-content: space-between; gap: 24px;
+    padding: 11px 0; border-bottom: 1px solid var(--line);
+  }
+  .item:last-child { border-bottom: 0; }
+  .item .l { color: var(--ink-strong); }
+  .item .l .at { color: var(--ink-mute); }
+  .item .r {
+    display: flex; align-items: center; gap: 12px;
+    font-family: 'Geist Mono', monospace; font-size: 13px;
+    color: var(--ink-mute); white-space: nowrap; flex-shrink: 0;
+  }
+
+  /* ---- logo badges + education ---- */
+  .logo {
+    width: 54px; height: 54px; border-radius: 8px; flex-shrink: 0; overflow: hidden;
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--ink-strong) 4%, transparent);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.02em;
+    color: var(--ink-strong);
+  }
+  .logo img { width: auto; height: 100%; max-height: 54px; object-fit: contain; display: block; }
+  .row-logo .l { display: flex; align-items: center; gap: 13px; }
+
+  .edu {
+    display: flex; align-items: flex-start; gap: 13px;
+    padding: 16px 0; border-bottom: 1px solid var(--line);
+  }
+  .edu:last-child { border-bottom: 0; }
+  .edu .logo { margin-top: 2px; }
+  .edu-main { flex: 1; min-width: 0; }
+  .edu-deg { color: var(--ink-strong); line-height: 1.4; }
+  .edu-deg .at { color: var(--ink-mute); }
+  .edu-inst { color: var(--ink-mute); font-size: 14px; line-height: 1.4; }
+  .edu-meta {
+    text-align: right; flex-shrink: 0;
+    font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--ink-mute);
+    line-height: 1.6; white-space: nowrap;
+  }
+  .edu-meta .grade { color: var(--accent); }
+  @media (max-width: 480px) {
+    .edu-deg, .edu-inst { font-size: 14px; }
+    .edu-meta { font-size: 11px; }
+  }
+
+  /* ---- footer ---- */
+  footer {
+    padding: 80px 0 56px;
+    font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--ink-mute);
+    display: flex; justify-content: space-between; gap: 16px;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="top">
+    <span class="name">Luca G. Pinta</span>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">light</button>
+  </div>
+
+  <nav class="nav">
+    <a href="index.html">index</a>
+    <a href="cv.html" class="active">cv</a>
+  </nav>
+
+  <main>
+
+    <section class="block">
+      <p class="label">Work</p>
+      <div class="item row-logo"><span class="l"><span class="logo" title="NeuralAgent"><img src="assets/neuralagent-logo.png" alt="NA" /></span><span class="lt">Network Engineer R&D <span class="at">· NeuralAgent</span></span></span><span class="r">2024 — current</span></div>
+      <div class="item row-logo"><span class="l"><span class="logo" title="TUM"><img src="assets/tum-logo.png" alt="TU Munchen" /></span><span class="lt">Research Assistant <span class="at">· TUM - Chair of Connected Mobility</span></span></span><span class="r">2024</span></div>
+      <div class="item row-logo"><span class="l"><span class="logo" title="Zerynth IoT"><img src="assets/zerynth-logo.png" alt="Zerynth" /></span><span class="lt">R&D Software Engineer Intern <span class="at">· Zerynth IoT</span></span></span><span class="r">2022 — 2023</span></div>
+      <div class="item row-logo"><span class="l"><span class="logo" title="Freelancer"><img src="assets/freelance.png" alt="freelance" /></span><span class="lt">Freelancer <span class="at">· Home</span></span></span><span class="r">2016 — 2018</span></div>
+    </section>
+
+    <section class="block">
+      <p class="label">Education</p>
+      <div class="edu">
+        <span class="logo" title="TU München"><img src="assets/tum-logo.png" alt="TU Munchen" /></span>
+        <div class="edu-main">
+          <div class="edu-deg"><strong>M.Sc Computer Science &amp; Engineering</strong> <span class="at">· CIT</span></div>
+          <div class="edu-inst">TU München, Germany — Exchange semester</div>
+        </div>
+        <div class="edu-meta"><div>Mar – Oct 2024</div></div>
+      </div>
+      <div class="edu">
+        <span class="logo" title="University of Pisa"><img src="assets/unipi-logo.png" alt="University of Pisa" /></span>
+        <div class="edu-main">
+          <div class="edu-deg"><strong>M.Sc Computer Science</strong> <span class="at">· ICT Solution Architect</span></div>
+          <div class="edu-inst">University of Pisa, Italy</div>
+        </div>
+        <div class="edu-meta"><div>2022 – 2025</div></div>
+      </div>
+      <div class="edu">
+        <span class="logo" title="University of Pisa"><img src="assets/unipi-logo.png" alt="University of Pisa" /></span>
+        <div class="edu-main">
+          <div class="edu-deg"><strong>B.Sc Computer Science</strong></div>
+          <div class="edu-inst">University of Pisa, Italy</div>
+        </div>
+        <div class="edu-meta"><div>2018 – 2022</div></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <p class="label">Fun</p>
+      <div class="edu">
+        <span class="logo" title="EUSPA"><img src="assets/euspa-logo.png" alt=" EUSPA - EU Agency for the Space Programme" /></span>
+        <div class="edu-main">
+          <div class="edu-deg"><strong>EU Space for Defence and Security 2024 </strong> <span class="at">· 3rd Place Winner, Czech Republic, ESA Innovation Centre</span></div>
+        </div>
+        <div class="edu-meta"><div>2024</div></div>
+      </div>
+      <div class="edu">
+        <span class="logo" title="SuperHeroe Valley"><img src="assets/superheroe-logo.png" alt="SuperHeroe Valley" /></span>
+        <div class="edu-main">
+          <div class="edu-deg"><strong>Mentee</strong> <span class="at">· Each mentor is a high-impact person from industries like Apple, Adobe, Epic Games, Meta, Microsoft, Netflix, Nvidia, Twitter</span></div>
+        </div>
+        <div class="edu-meta"><div>2022</div></div>
+      </div>
+      <div class="edu">
+        <span class="logo" title="Hack.Developers"><img src="assets/developers-logo.png" alt="Developers" /></span>
+        <div class="edu-main">
+          <div class="edu-deg"><strong>Hack.Developers Hackaton</strong> <span class="at">· <i>"The power of Open Source is the power of the people. The people rule. – Philippe Kahn</i></span></div>
+        </div>
+        <div class="edu-meta"><div>2017</div></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <span>© 2026 Luca G. Pinta</span>
+    <span>Munich · CET</span>
+  </footer>
+
+</div>
+
+<script>
+  (function () {
+    const root = document.documentElement;
+    const btn = document.getElementById('themeToggle');
+    root.setAttribute('data-theme', localStorage.getItem('luca-theme') || 'dark');
+    function sync() { btn.textContent = root.getAttribute('data-theme') === 'dark' ? 'light 💡' : 'dark 🌑'; }
+    sync();
+    btn.addEventListener('click', () => {
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('luca-theme', next);
+      sync();
+    });
+  })();
+</script>
+
+</body>
+</html>
