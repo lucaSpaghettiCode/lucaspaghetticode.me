@@ -300,8 +300,11 @@
     <section class="block">
       <p class="label">Projects</p>
       <div class="item"><a class="l" href="#project/adagio">Adagio: your files, in tempo!</a><span class="r"><span class="techmini" data-tech="Rust,eBPF"></span><span class="yr">2026</span></span></div>
-      <div class="item"><a class="l" href="#project/homelab-nas">10GbE NAS build</a><span class="r"><span class="techmini" data-tech="ZFS,Linux"></span><span class="yr">2026</span></span></div>
+      <div class="item"><a class="l" href="#project/homelab-nas">Homelab NAS build</a><span class="r"><span class="techmini" data-tech="Docker,Linux"></span><span class="yr">2026</span></span></div>
+      <!-- TEMPORARILY HIDDEN: home-net project
       <div class="item"><a class="l" href="#project/home-net">Autonomous home network</a><span class="r"><span class="techmini" data-tech="BGP,Linux"></span><span class="yr">2025</span></span></div>
+      -->
+
       <div class="item"><a class="l" href="#project/oakestra">Oakestra: A Lightweight Hierarchical Orchestration Framework for Edge Computing  </a><span class="r"><span class="techmini" data-tech="K8s,Go"></span><span class="yr">2024</span></span></div>
       <div class="item"><a class="l" href="#project/zt-coap">Go-Microservices: Architecting Zero-Trust CoAP</a><span class="r"><span class="techmini" data-tech="Python,MQTT"></span><span class="yr">2022</span></span></div>
     </section>
@@ -398,18 +401,20 @@
         },
         'homelab-nas': {
           kicker: 'Project · 2026 · Builder',
-          title: '10GbE NAS build',
-          lead: 'A high-performance storage solution optimized for media streaming and 10GbE throughput, featuring ZFS for ultimate data integrity.',
+          title: 'Homelab NAS build',
+          lead: 'A Raspberry Pi 4 and a 2 TB drive running nineteen self-hosted services from a single Docker Compose file — media, file sync, and an automated music pipeline — reachable from anywhere over Tailscale, with no open ports and no cloud accounts.',
           image: 'assets/project-nas.jpg',
-          stack: ['ZFS', 'Linux'],
+          stack: ['Docker', 'Linux'],
           facts: [
-            { k: 'Storage', v: 'ZFS RaidZ2' },
-            { k: 'Network', v: '10GbE SFP+' },
-            { k: 'OS',      v: 'Debian / Linux' },
+            { k: 'Hardware', v: 'Raspberry Pi 4' },
+            { k: 'Storage',  v: '2 TB HDD' },
+            { k: 'Network',  v: 'Tailscale mesh' },
+            { k: 'Stack',    v: 'Docker Compose · 19 services' },
           ],
           prev: { slug: 'adagio', label: 'Adagio' },
-          next: { slug: 'home-net', label: 'home network' },
+          next: { slug: 'oakestra', label: 'Oakestra' },
         },
+        /* TEMPORARILY HIDDEN: home-net project
         'home-net': {
           kicker: 'Project · 2025 · Designer & operator',
           title: 'Autonomous home network',
@@ -425,6 +430,7 @@
           prev: { slug: 'homelab-nas', label: 'NAS build' },
           next: { slug: 'oakestra', label: 'Oakestra' },
         },
+        END TEMPORARILY HIDDEN */
         'oakestra': {
           kicker: 'Project · 2024 · Contributor',
           title: 'Oakestra: A Lightweight Hierarchical Orchestration Framework for Edge Computing',
@@ -436,7 +442,7 @@
             { k: 'Focus',   v: 'Hierarchical Control' },
             { k: 'Language',v: 'Go' },
           ],
-          prev: { slug: 'home-net', label: 'home network' },
+          prev: { slug: 'homelab-nas', label: 'NAS build' },
           next: { slug: 'zt-coap', label: 'Zero-Trust CoAP' },
         },
         'zt-coap': {
